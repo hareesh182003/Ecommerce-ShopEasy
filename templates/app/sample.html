@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    {% block title %}
+    <title>Document</title>
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+            {% if user.is_authenticated %}
+                <a href="{% url 'home' %}">ShopEasy</a>
+            {% else %}
+                <a href="{% url 'home' %}">ShopEasy</a>
+            {% endif %}
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products">
+                <button>Search</button>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'productItem' %}" class="navbar-link text-white">productItem</a>
+                    <a href="{% url 'Userlogut' %}" class="navbar-link text-white">Logout</a>
+                    {% if UO and PO %}
+                        <div class="user-profile">
+                            <img src="{{ PO.profile_pic.url }}" width="10px" height="10px" alt="Profile Picture" class="profile-pic">
+                            <span class="username">Hello, {{ UO.username }}</span>
+                        </div>
+                    {% endif %}
+
+                {% else %}
+                    <a href="{% url 'loginPage' %}" class="navbar-link text-white">SignIn</a>
+                {% endif %}
+            </ul>
+            
+            
+        </nav>
+    </header>
+
+    {% block body_block %}
+    {% endblock %}
+</body>
+
+</html>
