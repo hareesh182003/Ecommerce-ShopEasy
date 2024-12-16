@@ -58,7 +58,7 @@ class UserLoginForm(forms.Form):
 class ProductMF(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['product_id','product_name','product_description','product_prize']
+        fields = "__all__"
         widgets = {
             'product_id':forms.TextInput(attrs={
                 'class' : 'form-control text-center',
@@ -76,7 +76,23 @@ class ProductMF(forms.ModelForm):
                 'class' : 'form-control text-center',
                 'placeholder' : 'Enter the product_prize',
             }),
+            'product_brand_name':forms.TextInput(attrs={
+                'class' : 'form-control text-center',
+                'placeholder' : 'Enter the product_brand_name',
+            }),
+            'product_feature_description':forms.Textarea(attrs={
+                'class' : 'form-control text-center',
+                'placeholder' : 'Enter the product_feature_description',
+            }),
+            'product_model_number':forms.TextInput(attrs={
+                'class' : 'form-control text-center',
+                'placeholder' : 'Enter the product_model_number',
+            }),
+            'product_dimensions':forms.TextInput(attrs={
+                'class' : 'form-control text-center',
+                'placeholder' : 'Enter the product_dimensions',
+            }),
         }
         help_texts = {
-            'product_prize':'Enter the values in decimals'
+            'product_prize':'<small class="text-warning">Enter the values in decimals</small>'
         }

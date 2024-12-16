@@ -4,9 +4,10 @@ from app.forms import *
 from django.core.mail import send_mail
 from datetime import datetime,timedelta
 from django.contrib.auth import authenticate,login,logout
-from django.urls import reverse
+from django.urls import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 import random
+from django.views.generic import DetailView,DeleteView
 
 
 def registration(request):
@@ -59,7 +60,8 @@ The ShopEasy Team
 def home(request):
     if request.session.get('username'):
         username = request.session.get('username')
-        return render(request,'app/home.html',{'username1':username})
+        PTO = Product.objects.all()
+        return render(request,'app/home.html',{'username1':username,'PTO':PTO})
     return render(request,'app/home.html')
 
 
@@ -70,7 +72,6 @@ def profilePage(request):
     PO = Profile.objects.get(username=UO)
     d = {'UO':UO,'PO':PO}
     return render(request,'app/sample.html',d)
-
 
 
 
@@ -152,18 +153,8 @@ def login_continue(request):
 @login_required
 def Userlogut(request):
     logout(request)
-    EULF = UserLoginForm()
-    return render(request,'app/loginPage.html',{'EULF':EULF})
+    return render(request,'app/home.html')
 
-# @login_required
-# def product_list(request):
-#     if request.method == 'POST':
-#         category_filter = request.POST.get('category', '')
-#         if category_filter:
-#             products = Product.objects.filter(category__icontains=category_filter)
-#         else:
-#             products = Product.objects.all()
-#         return render(request, 'app/product_list.html', {'products': products})
 
 
 
@@ -223,6 +214,42 @@ The ShopEasy Team
 
 
 
-
+@login_required
 def cart(request):
-    return render(request,'app/cart.html')
+    username = request.session['username']
+    UO = User.objects.get(username=username)
+    COA = Cart.objects.filter(username = UO)
+    if request.method == 'POST':
+        pro_id = request.POST['product_id']
+        PO = Product.objects.get(product_id = pro_id)
+        CO = Cart.objects.get_or_create(username=UO,products=PO)
+        return render(request,'app/cart.html',{'COA':COA})
+    return render(request,'app/cart.html',{'COA':COA})
+
+
+
+class ProductDetails(DetailView):
+    model = Product
+    context_object_name = 'objects'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = context['objects']
+        
+        product_price = float(product.product_prize)  
+        discount_price = product_price * float('0.20') 
+        mrp_price = product_price*float('1.20')
+        
+        context['discount_price'] = discount_price
+        context['mrp_price'] = mrp_price
+        return context
+    
+
+
+def deleteView(request):
+    if request.method == 'POST':
+        deleteID = request.POST['deleteValue']
+        Cart.objects.filter(products = deleteID).delete()
+        d = Cart.objects.all()
+        return render(request,'app/cart.html',{'COA':d})
+

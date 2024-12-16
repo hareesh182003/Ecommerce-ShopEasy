@@ -1,0 +1,38 @@
+button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+
+.buy-now,
+.add-to-cart {
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.buy-now {
+    background-color: #007bff;
+    margin-bottom: 5px;
+}
+
+.add-to-cart {
+    background-color: #28a745;
+}
+
+.buy-now:hover {
+    background-color: #0056b3;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+.add-to-cart-form {
+    margin: 0; /* Remove margin for inline alignment */
+}

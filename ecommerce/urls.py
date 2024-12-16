@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,re_path
 from app.views import *
 from django.conf import settings
 from django.conf.urls.static import static
@@ -32,6 +32,14 @@ urlpatterns = [
     path('login_continue/',login_continue,name='login_continue'),
     path('resendOTP/',resendOTP,name='resendOTP'),
     path('cart/',cart,name='cart'),
+    path('cart/deleteView',deleteView,name='deleteView'),
+
+
+
+    
+    re_path('(?P<pk>\d+)',ProductDetails.as_view(),name='ProductDetails'),
+   
+    
     
 
     
