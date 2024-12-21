@@ -22,7 +22,7 @@
                 <a href="{{ i.product_id }}">View-Details</a>
                 <p class="product-price">&#8377; {{ i.product_prize }}</p>
                 <div class="button-container">
-                    <button class="buy-now nice-now">Buy Now</button>
+                    <a href="{% url 'payment' %}"><button  class="buy-now nice-now">Buy Now</button></a>
                     <form action="{% url 'cart' %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="product_id" value="{{ i.product_id }}">

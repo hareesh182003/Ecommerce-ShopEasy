@@ -33,7 +33,8 @@ urlpatterns = [
     path('resendOTP/',resendOTP,name='resendOTP'),
     path('cart/',cart,name='cart'),
     path('cart/deleteView',deleteView,name='deleteView'),
-
+    path('update_cart_quantity/',update_cart_quantity,name='update_cart_quantity'),
+    path('payment/',payment,name='payment'),
 
 
     

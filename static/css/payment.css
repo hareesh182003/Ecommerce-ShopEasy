@@ -1,0 +1,122 @@
+
+
+
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Card Styling with Bounce */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease-in-out;
+    animation: cardBounce 2s infinite ease-in-out;
+}
+
+@keyframes cardBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Header Styling with Glow */
+.card-header {
+    background: linear-gradient(90deg, #ff758c, #ff7eb3);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ff758c; }
+    to { box-shadow: 0 0 20px #ff7eb3; }
+}
+
+/* Input Styling with Glowing Border */
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: rgba(240, 240, 240, 0.9);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+form input:focus {
+    border: 2px solid #ff758c;
+    box-shadow: 0 0 15px #ff7eb3, 0 0 30px rgba(255, 120, 140, 0.5);
+    outline: none;
+}
+
+/* Button with Ripple Effect */
+.pay-now {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #ff7eb3, #ff7eb3);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(255, 120, 140, 0.3);
+    transition: all 0.4s ease-in-out;
+}
+
+.pay-now:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(90deg, #ff7eb3, #ff758c);
+    box-shadow: 0 8px 25px rgba(255, 120, 140, 0.6);
+}
+
+.pay-now::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    z-index: 1;
+    transition: all 0.6s ease-out;
+}
+
+.pay-now:active::after {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+    transition: none;
+}
+
+/* Label Styling */
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: #444;
+}
+
+/* Glowing Form Hover */
+form:hover {
+    box-shadow: 0 0 30px rgba(255, 120, 140, 0.4);
+    border-radius: 10px;
+}

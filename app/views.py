@@ -171,6 +171,8 @@ def productItem(request):
         if PFDO.is_valid():
             PFDO.save()
             return render(request,'app/productItem.html',{'EPF':EPF,'success':'Product Added Successfully'})
+        else:
+            return HttpResponse('Not added the item')
     return render(request,'app/productItem.html',{'EPF':EPF})
     
 
@@ -211,6 +213,22 @@ The ShopEasy Team
     
 
 
+def update_cart_quantity(request):
+    if request.method == 'GET':
+        product_id = request.GET['product_id']
+        action = request.GET['action']
+        cart_item = Cart.objects.get(products = product_id)
+        
+        if action == 'inc':
+            cart_item.quantity += 1
+        elif action == 'dec' and cart_item.quantity > 1:
+            cart_item.quantity -= 1
+
+        cart_item.total = cart_item.quantity * cart_item.products.product_prize
+        cart_item.save()
+    
+    return redirect('cart')
+
 
 
 
@@ -224,7 +242,10 @@ def cart(request):
         PO = Product.objects.get(product_id = pro_id)
         CO = Cart.objects.get_or_create(username=UO,products=PO)
         return render(request,'app/cart.html',{'COA':COA})
-    return render(request,'app/cart.html',{'COA':COA})
+    AM = Cart.objects.values_list('total',flat=True)
+    return render(request,'app/cart.html',{'COA':COA,'amount':sum(AM)})
+
+
 
 
 
@@ -245,7 +266,7 @@ class ProductDetails(DetailView):
         return context
     
 
-
+@login_required
 def deleteView(request):
     if request.method == 'POST':
         deleteID = request.POST['deleteValue']
@@ -253,3 +274,5 @@ def deleteView(request):
         d = Cart.objects.all()
         return render(request,'app/cart.html',{'COA':d})
 
+def payment(request):
+    return render(request,'app/payment.html')
